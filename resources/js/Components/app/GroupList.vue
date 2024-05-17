@@ -7,74 +7,29 @@ const searchKeyword = ref();
 </script>
 
 <template>
-  <div class="px-3 bg-white rounded-lg border">
-    <h2 class="text-2xl font-bold text-center">My Groups</h2>
-    <div v-if="false" class="text-gray-500 text-center">
-      You have not joined any group yet.
-    </div>
-    <div v-else>
-      <div class="text-center py-6">
-        <TextInput
-          model-value="searchKeyword"
-          placeholder="Type to search ..."
-          class="w-full"
+  <div class="px-3 bg-white rounded-lg border py-3">
+    <h2 class="text-2xl font-bold text-center mb-4">My Groups</h2>
+    <TextInput
+      :model-value="searchKeyword"
+      placeholder="Type to search ..."
+      class="w-full"
+    />
+    <div class="py-8">
+      <div v-if="false" class="text-gray-400 text-center flex">
+        You have not joined any group yet.
+      </div>
+      <div v-else>
+        <group-item
+          image="https://picsum.photos/100"
+          title="Laravel Developers"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
+        />
+        <group-item
+          image="https://picsum.photos/100"
+          title="Vue js Developers"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
         />
       </div>
-      <group-item
-        image="https://picsum.photos/100"
-        title="Laravel Developers"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
-      />
-      <group-item
-        image="https://picsum.photos/100"
-        title="Vue js Developers"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
-      />
-      <group-item
-        image="https://picsum.photos/100"
-        title="Vue js Developers"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
-      />
-      <group-item
-        image="https://picsum.photos/100"
-        title="Vue js Developers"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
-      />
-      <group-item
-        image="https://picsum.photos/100"
-        title="Vue js Developers"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
-      />
-      <group-item
-        image="https://picsum.photos/100"
-        title="Vue js Developers"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
-      />
-      <group-item
-        image="https://picsum.photos/100"
-        title="Vue js Developers"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
-      />
-      <group-item
-        image="https://picsum.photos/100"
-        title="Vue js Developers"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
-      />
-      <group-item
-        image="https://picsum.photos/100"
-        title="Vue js Developers"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
-      />
-      <group-item
-        image="https://picsum.photos/100"
-        title="Vue js Developers"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
-      />
-      <group-item
-        image="https://picsum.photos/100"
-        title="Vue js Developers"
-        description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in"
-      />
     </div>
   </div>
 </template>
