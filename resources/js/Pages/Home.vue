@@ -2,6 +2,8 @@
 import {Head} from '@inertiajs/vue3';
 import GroupList from "@/Components/app/GroupList.vue";
 import FollowerList from "@/Components/app/FollowerList.vue";
+import PostList from "@/Components/app/PostList.vue";
+import CreatePost from "@/Components/app/CreatePost.vue";
 </script>
 
 <template>
@@ -15,7 +17,8 @@ import FollowerList from "@/Components/app/FollowerList.vue";
             </div>
         </div>
         <div class="col-span-6">
-            Posts
+            <create-post />
+            <post-list />
         </div>
         <div class="col-span-3 py-6 px-3">
             <div class="py-8">
