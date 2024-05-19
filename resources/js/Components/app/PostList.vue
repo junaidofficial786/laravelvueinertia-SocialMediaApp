@@ -46,7 +46,7 @@ const post2 = {
 </script>
 
 <template>
-  <div>
+  <div class="overflow-auto">
     <post-item :post="post1" />
     <post-item :post="post2" />
     <post-item :post="post2" />

@@ -7,15 +7,15 @@ const searchKeyword = ref();
 </script>
 
 <template>
-  <div class="px-3 bg-white rounded-lg border py-3 h-[400px] overflow-hidden flex flex-col">
-    <h2 class="text-2xl font-bold text-center mb-4">My Groups</h2>
+  <div class="px-3 bg-white rounded-lg border py-3 lg:h-full overflow-hidden flex flex-col">
+    <h2 class="text-2xl font-bold mb-4">My Groups</h2>
     <TextInput
       :model-value="searchKeyword"
       placeholder="Type to search ..."
       class="w-full"
     />
-    <div class="py-8 flex-1 overflow-auto">
-      <div v-if="false" class="text-gray-400 text-center flex">
+    <div class="py-2 mt-3 lg:flex-1 h-[300px] lg:h-auto overflow-auto">
+      <div v-if="false" class="text-gray-400 text-center flex p-3">
         You have not joined any group yet.
       </div>
       <div v-else >
