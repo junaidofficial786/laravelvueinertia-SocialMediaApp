@@ -10,14 +10,14 @@ import CreatePost from "@/Components/app/CreatePost.vue";
   <Head title="Social Media Website" />
 
   <!-- layout using tailwind starts-->
-  <div class="grid lg:grid-cols-12 gap-3 p-4">
-    <div class="lg:col-span-3 lg:order-1 h-full overflow-auto">
+  <div class="grid lg:grid-cols-12 gap-3 p-4 h-full">
+    <div class="lg:col-span-3 lg:order-1 h-full overflow-hidden">
       <group-list />
     </div>
     <div class="lg:col-span-3 lg:order-3 h-full overflow-auto">
       <follower-list />
     </div>
-    <div class="lg:col-span-6 lg:order-2 h-full overflow-auto">
+    <div class="lg:col-span-6 lg:order-2 h-full">
       <create-post />
       <post-list />
     </div>

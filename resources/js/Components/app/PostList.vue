@@ -49,6 +49,8 @@ const post2 = {
   <div>
     <post-item :post="post1" />
     <post-item :post="post2" />
+    <post-item :post="post2" />
+    <post-item :post="post2" />
   </div>
 </template>
 
