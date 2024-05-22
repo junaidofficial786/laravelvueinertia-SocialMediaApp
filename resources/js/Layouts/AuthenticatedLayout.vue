@@ -11,7 +11,9 @@ const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-  <div class="h-full overflow-hidden flex flex-col bg-gray-100 dark:bg-gray-900">
+  <div
+    class="h-full overflow-hidden flex flex-col bg-gray-100 dark:bg-gray-900"
+  >
     <nav
       class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700"
     >
@@ -61,7 +63,11 @@ const showingNavigationDropdown = ref(false);
                 </template>
 
                 <template #content>
-                  <DropdownLink :href="route('profile.edit')">
+                  <DropdownLink
+                    :href="
+                      route('profile', {username: $page.props.auth.user.username})
+                    "
+                  >
                     Profile
                   </DropdownLink>
                   <DropdownLink
