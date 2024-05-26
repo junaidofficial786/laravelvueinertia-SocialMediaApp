@@ -4,13 +4,44 @@
 <template>
   <authenticated-layout>
     <div class="container mx-auto h-full overflow-auto">
-      <div class="relative bg-white">
+      <div class="group relative bg-white">
+        {{ errors }}
         <img
-          src="https://i.pinimg.com/564x/3a/b7/ea/3ab7eac12701d0ca0e2ed6f668b70987.jpg"
+          :src="coverImageSrc || user.cover_url"
           class="w-full h-[200px] object-cover"
           alt=""
         />
+        <div>
+          <button
+            v-if="!coverImageSrc"
+            class="absolute top-2 right-2 bg-gray-50 hover:bg-gray-100 py-1 px-2 text-xs flex items-center opacity-0 group-hover:opacity-100"
+          >
+            <CameraIcon class="h-3 w-3 mr-2" />
 
+            Update Cover Image
+            <input
+              type="file"
+              class="absolute left-0 top-0 bottom-0 right-0 opacity-0"
+              @change="onCoverChange"
+            />
+          </button>
+          <div v-else class="flex gap-2 absolute top-2 right-2">
+            <button
+              @click="cancelCoverImage"
+              class="bg-gray-50 hover:bg-gray-100 text-gray-800 py-1 px-2 text-xs flex items-center opacity-0 group-hover:opacity-100"
+            >
+              <XMarkIcon class="h-3 w-3 mr-2" />
+              Cancel
+            </button>
+            <button
+              @click="submitCoverImage"
+              class="bg-gray-800 hover:bg-gray-900 text-gray-100 py-1 px-2 text-xs flex items-center opacity-0 group-hover:opacity-100"
+            >
+              <CheckCircleIcon class="h-3 w-3 mr-2" />
+              Submit
+            </button>
+          </div>
+        </div>
         <div class="flex">
           <img
             src="https://w7.pngwing.com/pngs/364/361/png-transparent-account-avatar-profile-user-avatars-icon-thumbnail.png"
@@ -42,32 +73,32 @@
       </div>
       <div class="border-t-2 border-gray-200">
         <TabGroup>
-          <TabList  class="flex bg-white">
-            <Tab v-if="isMyProfile" v-slot="{ selected }" as="template"
-              ><tab-item text="About" :selected="selected"
-            /></Tab>
-            <Tab v-slot="{ selected }" as="template"
-              ><tab-item text="Posts" :selected="selected"
-            /></Tab>
-            <Tab v-slot="{ selected }" as="template"
-              ><tab-item text="Followers" :selected="selected"
-            /></Tab>
-            <Tab v-slot="{ selected }" as="template"
-              ><tab-item text="Followings" :selected="selected"
-            /></Tab>
-            <Tab v-slot="{ selected }" as="template"
-              ><tab-item text="Photos" :selected="selected"
-            /></Tab>
+          <TabList class="flex bg-white">
+            <Tab v-if="isMyProfile" v-slot="{ selected }" as="template">
+              <tab-item text="About" :selected="selected" />
+            </Tab>
+            <Tab v-slot="{ selected }" as="template">
+              <tab-item text="Posts" :selected="selected" />
+            </Tab>
+            <Tab v-slot="{ selected }" as="template">
+              <tab-item text="Followers" :selected="selected" />
+            </Tab>
+            <Tab v-slot="{ selected }" as="template">
+              <tab-item text="Followings" :selected="selected" />
+            </Tab>
+            <Tab v-slot="{ selected }" as="template">
+              <tab-item text="Photos" :selected="selected" />
+            </Tab>
           </TabList>
 
           <TabPanels class="mt-2">
             <TabPanel v-if="isMyProfile" class="">
               <Edit :mustVerifyEmail="mustVerifyEmail" :status="status" />
             </TabPanel>
-            <TabPanel class="bg-white p-3 shadow"> Followers content </TabPanel>
-            <TabPanel class="bg-white p-3 shadow"> Followers content </TabPanel>
-            <TabPanel class="bg-white p-3 shadow"> Followers content </TabPanel>
-            <TabPanel class="bg-white p-3 shadow"> Followers content </TabPanel>
+            <TabPanel class="bg-white p-3 shadow"> Followers content</TabPanel>
+            <TabPanel class="bg-white p-3 shadow"> Followers content</TabPanel>
+            <TabPanel class="bg-white p-3 shadow"> Followers content</TabPanel>
+            <TabPanel class="bg-white p-3 shadow"> Followers content</TabPanel>
           </TabPanels>
         </TabGroup>
       </div>
@@ -76,17 +107,25 @@
 </template>
 
 <script setup>
-import {computed, ref} from "vue";
+import { computed, ref } from "vue";
 import Edit from "./Edit.vue";
-import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
-import { usePage } from "@inertiajs/vue3";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/vue";
+import { useForm, usePage } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import TabItem from "./Partials/TabItem.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
-const authUser = usePage().props.auth.user;
+
+import {
+  CameraIcon,
+  CheckCircleIcon,
+  CheckIcon,
+  TicketIcon,
+  XMarkIcon,
+} from "@heroicons/vue/20/solid";
 
 const props = defineProps({
+  errors: Object,
   mustVerifyEmail: {
     type: Boolean,
   },
@@ -94,11 +133,38 @@ const props = defineProps({
     type: String,
   },
   user: {
-    type: Object
-  }
+    type: Object,
+  },
 });
 
-const isMyProfile = computed(() =>  authUser && authUser.id === props.user.id)
+const imagesForm = useForm({
+  avatar: null,
+  cover: null
+})
+
+const authUser = usePage().props.auth.user;
+const isMyProfile = computed(() => authUser && authUser.id === props.user.id);
+const coverImageSrc = ref("");
 
 
+function onCoverChange(event) {
+  imagesForm.cover = event.target.files[0];
+  if (imagesForm.cover) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      coverImageSrc.value = reader.result;
+    };
+    reader.readAsDataURL(imagesForm.cover);
+  }
+}
+
+function cancelCoverImage() {
+  imagesForm.cover = null;
+  coverImageSrc.value = null;
+}
+
+function submitCoverImage() {
+  console.log(imagesForm.cover)
+  imagesForm.post(route('profile.updateCover'))
+}
 </script>
