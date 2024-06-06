@@ -72,8 +72,9 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function updateImage(Request $request, User $user) 
+    public function updateImage(Request $request) 
     {
+        $user = $request->user();
         $data = $request->validate([
             'avatar' => ['nullable', 'image'],
             'cover' => ['nullable', 'image'],
@@ -84,9 +85,12 @@ class ProfileController extends Controller
         $cover = $data['cover'] ?? null;
 
         if ($cover) {
-            $folderName = 'user-'.auth()->id();
-            $path = $cover->storeAs($folderName);
+            // $folderName = 'user-'.auth()->id();
+            // $path = $cover->storeAs($folderName);
+            $path = $cover->store('avatars/'.auth()->id(), 'public');
             $user->update(['cover_path' => $path]);
         }
+
+        return back()->with('status', 'cover-image-updated');
     }
 }

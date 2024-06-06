@@ -4,8 +4,17 @@
 <template>
   <authenticated-layout>
     <div class="container mx-auto h-full overflow-auto">
+      <div
+        v-show="showNotification && status === 'cover-image-updated'"
+        class="my-2 py-2 px-3 font-medium text-sm bg-green-500 text-white"
+      >
+        Your cover image has been updated
+      </div>
       <div class="group relative bg-white">
         {{ errors }}
+        <div v-show = 'errors.cover' class="my-2 py-2 px-3 font-medium text-sm bg-red-400 text-white">
+          {{ errors.cover }}
+        </div>
         <img
           :src="coverImageSrc || user.cover_url"
           class="w-full h-[200px] object-cover"
@@ -145,6 +154,7 @@ const imagesForm = useForm({
 const authUser = usePage().props.auth.user;
 const isMyProfile = computed(() => authUser && authUser.id === props.user.id);
 const coverImageSrc = ref("");
+const showNotification = ref(true)
 
 
 function onCoverChange(event) {
@@ -164,7 +174,14 @@ function cancelCoverImage() {
 }
 
 function submitCoverImage() {
-  console.log(imagesForm.cover)
-  imagesForm.post(route('profile.updateCover'))
+  imagesForm.post(route('profile.updateCover'), {
+    onSuccess: (user) => {
+      console.log(user)
+      cancelCoverImage()
+      setTimeout(() => {
+        showNotification.value = false
+      }, 3000);
+    }
+  })
 }
 </script>
