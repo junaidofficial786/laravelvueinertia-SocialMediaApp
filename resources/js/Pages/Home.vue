@@ -5,6 +5,10 @@ import FollowerList from "@/Components/app/FollowerList.vue";
 import PostList from "@/Components/app/PostList.vue";
 import CreatePost from "@/Components/app/CreatePost.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+
+defineProps({
+    posts: Object
+})
 </script>
 
 <template>
