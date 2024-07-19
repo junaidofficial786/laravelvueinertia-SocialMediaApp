@@ -26,7 +26,7 @@ defineProps({
         class="lg:col-span-6 lg:order-2 h-full overflow-hidden flex flex-col"
       >
         <create-post />
-        <post-list class="flex-1" />
+        <post-list :posts="posts.data" class="flex-1" />
       </div>
     </div>
   </AuthenticatedLayout>

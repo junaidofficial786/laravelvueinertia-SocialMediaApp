@@ -43,14 +43,15 @@ const post2 = {
   body: `<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in</p><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in</p><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam excepturi, in</p>`,
   created_at: "2022-01-01 00:00:00",
 };
+
+const props = defineProps({
+    posts: Array
+})
 </script>
 
 <template>
   <div class="overflow-auto">
-    <post-item :post="post1" />
-    <post-item :post="post2" />
-    <post-item :post="post2" />
-    <post-item :post="post2" />
+    <post-item v-for="post of props.posts" :key="post.id" :post="post" />
   </div>
 </template>
 

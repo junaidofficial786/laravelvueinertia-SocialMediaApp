@@ -7,9 +7,17 @@ const model = defineModel(
         required: true,
     });
 
+const props = defineProps({
+    autoResize: {
+        type: Boolean,
+        default: true
+    }
+})
+
 const input = ref(null);
 
 onMounted(() => {
+    onInputChange()
     if (input.value.hasAttribute('autofocus')) {
         input.value.focus();
     }
@@ -17,9 +25,12 @@ onMounted(() => {
 
 defineExpose({focus: () => input.value.focus()});
 
-function onInputChange (event) {
-    input.value.style.height = 'auto';
-    input.value.style.height = input.value.scrollHeight + 'px';
+function onInputChange (event) { //function that automatically set height of textarea based on content length
+    if (props.autoResize) {
+        input.value.style.height = 'auto';
+        input.value.style.height = input.value.scrollHeight + 'px';
+
+    }
 }
 
 

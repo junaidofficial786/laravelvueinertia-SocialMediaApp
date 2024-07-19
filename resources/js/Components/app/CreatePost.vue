@@ -1,11 +1,19 @@
 <script setup>
 import { ref } from "vue";
 import TextAreaInput from "@/Components/TextAreaInput.vue";
+import {router, useForm} from "@inertiajs/vue3";
 
 const postCreating = ref(false);
-const newPost = ref({
+
+const newPostForm = useForm({
     body: "",
 })
+
+function submit() {
+    newPostForm.post(route('post.store'), {
+        onSuccess: () => newPostForm.reset()
+    })
+}
 </script>
 
 <template>
@@ -14,12 +22,12 @@ const newPost = ref({
       @click="postCreating = true"
       class="mb-3 w-full"
       placeholder="Click here to create new post"
-      v-model="newPost.body"
+      v-model="newPostForm.body"
      />
 
     <div v-if="postCreating" class="flex gap-2 justify-between">
       <button
-        type="submit"
+        type="button"
         class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 relative"
       >
         <input
@@ -30,6 +38,7 @@ const newPost = ref({
       </button>
       <button
         type="submit"
+        @click="submit"
         class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
       >
         Submit
