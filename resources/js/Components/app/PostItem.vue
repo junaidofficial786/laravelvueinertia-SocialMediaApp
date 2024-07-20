@@ -20,7 +20,9 @@ function isImage(attachment) {
 
 function deletePost() {
     if (window.confirm("Are you sure you want to delete this post?")) {
-        router.delete(route("post.destroy", props.post.id));
+        router.delete(route("post.destroy", props.post.id), {
+            preserveScroll: true
+        });
     }
 }
 </script>
