@@ -34,13 +34,14 @@
                                 class="text-lg flex items-center justify-between font-medium leading-6 text-gray-900"
                             >
                                 Update Post
-                                <button @click="show = false" class="flex items-center justify-center hover:bg-black/10 p-2 rounded-full">
-                                    <XMarkIcon class="h-4 w-4" />
+                                <button @click="show = false"
+                                        class="flex items-center justify-center hover:bg-black/10 p-2 rounded-full">
+                                    <XMarkIcon class="h-4 w-4"/>
                                 </button>
                             </DialogTitle>
                             <div class="mt-4 mb-6">
                                 <PostUserHeader :post="post" :showTime='false'/>
-                                <TextAreaInput v-model="post.body" class="w-full mt-5 mb-3"/>
+                                <TextAreaInput v-model="form.body" class="w-full mt-5 mb-3"/>
                             </div>
 
                             <div class="mt-4">
@@ -61,8 +62,8 @@
 </template>
 
 <script setup>
-import {computed, ref} from 'vue'
-import {Dialog, DialogPanel, DialogTitle, MenuButton, TransitionChild, TransitionRoot,} from '@headlessui/vue'
+import {computed, watch} from 'vue'
+import {Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot,} from '@headlessui/vue'
 import TextAreaInput from "@/Components/TextAreaInput.vue";
 import PostUserHeader from "@/Components/app/PostUserHeader.vue";
 import {XMarkIcon} from "@heroicons/vue/20/solid/index.js";
@@ -90,13 +91,17 @@ function closeModal() {
     emit('update:modelValue', false)
 }
 
+const form = useForm({
+    id: props.post.id,
+    body: props.post.body
+})
+
+watch(() => props.post, () => {
+    form.id = props.post.id
+    form.body = props.post.body
+})
 
 function submit() {
-    const form = useForm({
-        id: props.post.id,
-        body: props.post.body
-    })
-
     form.put(route('post.update', props.post), {
         preserveScroll: true,
         onSuccess: () => show.value = false
