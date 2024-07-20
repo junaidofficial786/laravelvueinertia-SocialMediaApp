@@ -4,8 +4,10 @@ import {ChevronDownIcon, PencilIcon, TrashIcon, EllipsisVerticalIcon} from '@her
 import PostModal from "@/Components/app/PostModal.vue";
 import {ref} from "vue";
 import PostUserHeader from "@/Components/app/PostUserHeader.vue";
+import {useForm} from "@inertiajs/vue3";
+import {router} from "@inertiajs/vue3";
 
-defineProps({
+const props = defineProps({
     post: Object,
 });
 
@@ -14,6 +16,12 @@ const showEditModal = ref(false);
 function isImage(attachment) {
     const mime = attachment.mime.split("/");
     return mime[0] === "image";
+}
+
+function deletePost() {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+        router.delete(route("post.destroy", props.post.id));
+    }
 }
 </script>
 
@@ -68,6 +76,7 @@ function isImage(attachment) {
                                       active ? 'bg-indigo-600 text-white' : 'text-gray-900',
                                       'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                                     ]"
+                                    @click="deletePost"
                                 >
                                     <TrashIcon
                                         class="mr-2 h-5 w-5"

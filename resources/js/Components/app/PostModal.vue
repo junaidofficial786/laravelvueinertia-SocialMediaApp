@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import {computed} from 'vue'
+import {computed, ref} from 'vue'
 import {Dialog, DialogPanel, DialogTitle, MenuButton, TransitionChild, TransitionRoot,} from '@headlessui/vue'
 import TextAreaInput from "@/Components/TextAreaInput.vue";
 import PostUserHeader from "@/Components/app/PostUserHeader.vue";
@@ -77,6 +77,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits('update:modelValue')
+
 
 const show = computed({
     get: () => props.modelValue,
