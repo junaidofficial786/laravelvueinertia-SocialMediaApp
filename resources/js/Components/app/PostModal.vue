@@ -89,6 +89,7 @@ function closeModal() {
     emit('update:modelValue', false)
 }
 
+
 function submit() {
     const form = useForm({
         id: props.post.id,
@@ -96,6 +97,7 @@ function submit() {
     })
 
     form.put(route('post.update', props.post), {
+        preserveScroll: true,
         onSuccess: () => show.value = false
     })
 }
